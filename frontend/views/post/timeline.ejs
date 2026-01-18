@@ -1,0 +1,110 @@
+<%- include('../partials/header', { 
+  title: typeof __ === 'function' ? __('post.timeline') : 'Timeline',
+  currentLang: typeof currentLang !== 'undefined' ? currentLang : 'en',
+  userHandle: typeof user !== 'undefined' ? user.handle : null
+}) %>
+
+<div class="main-content">
+  <div class="container">
+    <div class="header-info">
+      <h2><%= typeof __ === 'function' ? __('post.timeline') : 'Timeline' %></h2>
+      <div class="user-stats">
+        <span>@<%= user.handle %></span> |
+        <span><%= typeof __ === 'function' ? __('user.following') : 'Following' %>: <%= user.followingCount %></span> |
+        <span><%= typeof __ === 'function' ? __('user.followers') : 'Followers' %>: <%= user.followersCount %></span>
+      </div>
+    </div>
+
+    <div class="grid-layout">
+      <div class="main-column">
+        <!-- Post Composer -->
+        <div class="card">
+          <h3><%= typeof __ === 'function' ? __('post.create') : 'Create Post' %></h3>
+          <form action="/post/create" method="POST" class="form">
+            <div class="form-group">
+              <textarea 
+                name="content" 
+                required 
+                maxlength="280"
+                placeholder="<%= typeof __ === 'function' ? __('post.placeholder') : 'What\'s happening? Use @mention and #NipNip' %>"
+                rows="4"
+              ></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">
+              <%= typeof __ === 'function' ? __('post.create') : 'Post' %>
+            </button>
+          </form>
+        </div>
+
+        <!-- Timeline -->
+        <div class="card">
+          <h3><%= typeof __ === 'function' ? __('post.timeline') : 'Your Timeline' %></h3>
+          
+          <% if (timeline.length === 0) { %>
+            <div class="empty-state">
+              <p><%= typeof __ === 'function' ? __('post.empty') : 'Your timeline is empty' %></p>
+              <p><%= typeof __ === 'function' ? __('post.startPosting') : 'Follow users or post something!' %></p>
+            </div>
+          <% } else { %>
+            <div class="posts-list">
+              <% timeline.forEach(post => { %>
+                <div class="post">
+                  <div class="post-header">
+                    <strong class="post-author">@<%= post.authorHandle %></strong>
+                    <span class="post-time">
+                      <%= new Date(post.createdAt).toLocaleString(typeof currentLang !== 'undefined' ? currentLang : 'en') %>
+                    </span>
+                  </div>
+                  <div class="post-content">
+                    <%- post.content.replace(/@(\w+)/g, '<span style="color: #1da1f2; font-weight: 600;">@$1</span>').replace(/#NipNip/g, '<span style="color: #c62828; font-weight: 600;">#NipNip</span>') %>
+                  </div>
+                  <div class="post-meta">
+                    <% if (post.mentions && post.mentions.length > 0) { %>
+                      <span class="badge">👥 <%= post.mentions.length %></span>
+                    <% } %>
+                    <% if (post.hasNipNipHashtag) { %>
+                      <span class="badge badge-nip">🔥 #NipNip</span>
+                    <% } %>
+                  </div>
+                </div>
+              <% }); %>
+            </div>
+          <% } %>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="sidebar-column">
+        <div class="card">
+          <h3><%= typeof __ === 'function' ? __('user.allUsers') : 'All Users' %></h3>
+          
+          <% if (allUsers.length === 0) { %>
+            <p class="text-muted"><%= typeof __ === 'function' ? __('user.noUsers') : 'No other users yet' %></p>
+          <% } else { %>
+            <div class="users-list">
+              <% allUsers.forEach(otherUser => { %>
+                <div class="user-item">
+                  <div>
+                    <strong>@<%= otherUser.handle %></strong>
+                  </div>
+                  <% if (!user.following.includes(otherUser.handle)) { %>
+                    <form action="/user/follow" method="POST" style="display: inline;">
+                      <input type="hidden" name="followHandle" value="<%= otherUser.handle %>">
+                      <button type="submit" class="btn btn-small">
+                        <%= typeof __ === 'function' ? __('user.follow') : 'Follow' %>
+                      </button>
+                    </form>
+                  <% } else { %>
+                    <span class="badge"><%= typeof __ === 'function' ? __('user.following') : 'Following' %></span>
+                  <% } %>
+                </div>
+              <% }); %>
+            </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="<%= typeof currentLang !== 'undefined' ? currentLang : 'en' %>" 
+      dir="<%= typeof currentLang !== 'undefined' && currentLang === 'ar' ? 'rtl' : 'ltr' %>">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> - <%= typeof __ === 'function' ? __('app.name') : 'Nip' %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="<%= typeof currentLang !== 'undefined' && currentLang === 'ar' ? 'rtl' : 'ltr' %>">
+  <nav class="navbar">
+    <div class="container">
+      <a href="/" class="logo">🐦 <%= typeof __ === 'function' ? __('app.name') : 'Nip' %></a>
+      <div class="nav-links">
+        <a href="?lang=en" class="<%= typeof currentLang !== 'undefined' && currentLang === 'en' ? 'active' : '' %>">EN</a>
+        <a href="?lang=ar" class="<%= typeof currentLang !== 'undefined' && currentLang === 'ar' ? 'active' : '' %>">عربي</a>
+        <% if (typeof userHandle !== 'undefined' && userHandle) { %>
+          <a href="/post/timeline"><%= typeof __ === 'function' ? __('post.timeline') : 'Timeline' %></a>
+          <a href="/user/profile"><%= typeof __ === 'function' ? __('user.profile') : 'Profile' %></a>
+          <a href="/auth/logout"><%= typeof __ === 'function' ? __('auth.logout') : 'Logout' %></a>
+        <% } %>
+      </div>
+    </div>
+  </nav>

@@ -1,0 +1,54 @@
+<%- include('../partials/header', { 
+  title: typeof __ === 'function' ? __('user.profile') : 'Profile',
+  currentLang: typeof currentLang !== 'undefined' ? currentLang : 'en',
+  userHandle: typeof user !== 'undefined' ? user.handle : null
+}) %>
+
+<div class="main-content">
+  <div class="container">
+    <div class="card">
+      <h1><%= typeof __ === 'function' ? __('user.profile') : 'Profile' %></h1>
+      
+      <div class="profile-info">
+        <h2>@<%= user.handle %></h2>
+        <p><%= typeof __ === 'function' ? __('auth.contact') : 'Contact' %>: <%= user.contact %></p>
+        <p><%= typeof __ === 'function' ? __('auth.contactType') : 'Contact Type' %>: <%= user.contactType === 'email' ? (typeof __ === 'function' ? __('auth.email') : 'Email') : (typeof __ === 'function' ? __('auth.sms') : 'SMS') %></p>
+        
+        <div class="stats">
+          <div class="stat-item">
+            <span class="stat-number"><%= user.followingCount %></span>
+            <span class="stat-label"><%= typeof __ === 'function' ? __('user.following') : 'Following' %></span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number"><%= user.followersCount %></span>
+            <span class="stat-label"><%= typeof __ === 'function' ? __('user.followers') : 'Followers' %></span>
+          </div>
+        </div>
+
+        <% if (user.following && user.following.length > 0) { %>
+          <div class="following-list">
+            <h3><%= typeof __ === 'function' ? __('user.following') : 'Following' %>:</h3>
+            <ul>
+              <% user.following.forEach(handle => { %>
+                <li>@<%= handle %></li>
+              <% }); %>
+            </ul>
+          </div>
+        <% } %>
+
+        <% if (user.followers && user.followers.length > 0) { %>
+          <div class="following-list">
+            <h3><%= typeof __ === 'function' ? __('user.followers') : 'Followers' %>:</h3>
+            <ul>
+              <% user.followers.forEach(handle => { %>
+                <li>@<%= handle %></li>
+              <% }); %>
+            </ul>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

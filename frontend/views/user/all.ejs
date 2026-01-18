@@ -1,0 +1,39 @@
+<%- include('../partials/header', { 
+  title: typeof __ === 'function' ? __('user.allUsers') : 'All Users',
+  currentLang: typeof currentLang !== 'undefined' ? currentLang : 'en',
+  userHandle: typeof currentHandle !== 'undefined' ? currentHandle : null
+}) %>
+
+<div class="main-content">
+  <div class="container">
+    <div class="card">
+      <h1><%= typeof __ === 'function' ? __('user.allUsers') : 'All Users' %></h1>
+      
+      <% if (users.length === 0) { %>
+        <p class="text-muted"><%= typeof __ === 'function' ? __('user.noUsers') : 'No other users yet' %></p>
+      <% } else { %>
+        <div class="users-list">
+          <% users.forEach(user => { %>
+            <div class="user-item">
+              <div>
+                <strong>@<%= user.handle %></strong>
+                <br>
+                <span class="text-muted">
+                  <%= user.contactType === 'email' ? (typeof __ === 'function' ? __('auth.email') : 'Email') : (typeof __ === 'function' ? __('auth.sms') : 'SMS') %>
+                </span>
+              </div>
+              <form action="/users/follow" method="POST" style="display: inline;">
+                <input type="hidden" name="followHandle" value="<%= user.handle %>">
+                <button type="submit" class="btn btn-small">
+                  <%= typeof __ === 'function' ? __('user.follow') : 'Follow' %>
+                </button>
+              </form>
+            </div>
+          <% }); %>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

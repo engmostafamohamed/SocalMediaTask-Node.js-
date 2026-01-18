@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  nip-app:
+    build: .
+    container_name: nip-microblog
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=production
+    command: ["node", "dist/index.js"]
+    restart: unless-stopped

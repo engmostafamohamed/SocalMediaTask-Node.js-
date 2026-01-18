@@ -1,0 +1,17 @@
+<%- include('partials/header', { 
+  title: 'Error',
+  currentLang: typeof currentLang !== 'undefined' ? currentLang : 'en',
+  userHandle: typeof userHandle !== 'undefined' ? userHandle : null
+}) %>
+
+<div class="main-content">
+  <div class="container">
+    <div class="card card-center">
+      <h1><%= typeof __ === 'function' ? __('errors.serverError') : 'Server Error' %></h1>
+      <p class="error-message"><%= error %></p>
+      <a href="/" class="btn btn-primary"><%= typeof __ === 'function' ? __('common.home') : 'Home' %></a>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

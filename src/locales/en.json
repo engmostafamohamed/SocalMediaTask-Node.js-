@@ -1,0 +1,58 @@
+{
+  "app": {
+    "name": "Nip",
+    "tagline": "Microblogging made simple"
+  },
+  "auth": {
+    "signup": "Sign Up",
+    "login": "Login",
+    "logout": "Logout",
+    "username": "Username",
+    "contact": "Email or Phone",
+    "contactType": "Contact Type",
+    "email": "Email",
+    "sms": "SMS",
+    "otp": "6-Digit OTP",
+    "verifyOTP": "Verify & Login",
+    "requestOTP": "Request OTP",
+    "checkConsole": "Check console for OTP sent to",
+    "userCreated": "User created successfully. OTP sent.",
+    "loginSuccess": "Login successful",
+    "invalidOTP": "Invalid or expired OTP",
+    "userNotFound": "User not found",
+    "userExists": "User already exists"
+  },
+  "post": {
+    "create": "Post",
+    "placeholder": "What's happening? Use @mention and #NipNip",
+    "created": "Post created successfully",
+    "timeline": "Your Timeline",
+    "empty": "Your timeline is empty",
+    "startPosting": "Follow users or post something!"
+  },
+  "user": {
+    "profile": "Profile",
+    "following": "Following",
+    "followers": "Followers",
+    "follow": "Follow",
+    "unfollow": "Unfollow",
+    "allUsers": "All Users",
+    "noUsers": "No other users yet",
+    "followSuccess": "Now following",
+    "cannotFollowSelf": "Cannot follow yourself"
+  },
+  "common": {
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "home": "Home"
+  },
+  "errors": {
+    "required": "This field is required",
+    "invalid": "Invalid input",
+    "serverError": "Server error occurred"
+  }
+}

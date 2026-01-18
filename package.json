@@ -1,0 +1,44 @@
+{
+  "name": "nip-microblogging",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "nodemon --watch \"src/**/*.ts\" --exec ts-node src/server.ts",
+    "migrate": "ts-node src/database/migrate.ts",
+    "docker:build": "docker build -t nip-microblog .",
+    "docker:run": "docker run -p 3000:3000 nip-microblog"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@prisma/client": "^7.2.0",
+    "body-parser": "^2.2.2",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "ejs": "^4.0.1",
+    "express": "^5.2.1",
+    "express-session": "^1.18.2",
+    "helmet": "^8.1.0",
+    "i18n": "^0.15.3",
+    "morgan": "^1.10.1",
+    "mysql2": "^3.16.1",
+    "prisma": "^6.19.2"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.10",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/express-session": "^1.18.2",
+    "@types/helmet": "^0.0.48",
+    "@types/i18n": "^0.13.12",
+    "@types/morgan": "^1.9.10",
+    "@types/node": "^25.0.9",
+    "nodemon": "^3.1.11",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}

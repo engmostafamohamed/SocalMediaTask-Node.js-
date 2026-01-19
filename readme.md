@@ -1,4 +1,4 @@
-# 🐦 Nip - Microblogging Platform
+# Nip - Microblogging Platform
 
 A modern, multilingual microblogging platform built with Node.js, Express, TypeScript, and MySQL. Features include user authentication with OTP, post creation with mentions and hashtags, following system, and real-time timelines.
 

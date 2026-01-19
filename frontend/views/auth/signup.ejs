@@ -7,7 +7,7 @@
 <div class="main-content">
   <div class="card-center">
     <div class="card">
-      <h1>🐦 <%= typeof __ === 'function' ? __('app.name') : 'Nip' %></h1>
+      <h1><%= typeof __ === 'function' ? __('app.name') : 'Nip' %></h1>
       <p class="tagline"><%= typeof __ === 'function' ? __('app.tagline') : 'Microblogging made simple' %></p>
 
       <% if (typeof error !== 'undefined' && error) { %>

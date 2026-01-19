@@ -1,8 +1,24 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from 'express';
 
-export function requireAuth(req: Request, res: Response, next: NextFunction) {
-  if (!(req.session as any).userHandle) {
-    return res.redirect("/auth/signup");
+export const authMiddleware = (req: Request, res: Response, next: NextFunction): void => {
+  const userHandle = (req as any).session?.userHandle;
+  
+  if (!userHandle) {
+    res.redirect('/auth/signup');
+    return;
   }
+  
+  next();
+};
+
+// Alternative: export as function
+export function requireAuth(req: Request, res: Response, next: NextFunction): void {
+  const userHandle = (req as any).session?.userHandle;
+  
+  if (!userHandle) {
+    res.redirect('/auth/signup');
+    return;
+  }
+  
   next();
 }

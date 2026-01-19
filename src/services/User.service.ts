@@ -50,13 +50,27 @@ export class UserService implements IUserService {
 
   async follow(followerHandle: string, followeeHandle: string): Promise<void> {
     try {
-      if (followerHandle === followeeHandle)
+      // Validate inputs
+      if (!followerHandle || !followeeHandle) {
+        throw new Error("Follower and followee handles are required");
+      }
+
+      if (followerHandle === followeeHandle) {
         throw new Error("Cannot follow yourself");
+      }
+
+      // Check if both users exist
+      const follower = await this.getUserByHandle(followerHandle);
+      const followee = await this.getUserByHandle(followeeHandle);
+
+      if (!follower) throw new Error(`User @${followerHandle} not found`);
+      if (!followee) throw new Error(`User @${followeeHandle} not found`);
 
       await connectDB.query(
         "INSERT IGNORE INTO follows (followerHandle, followeeHandle) VALUES (?, ?)",
         [followerHandle, followeeHandle]
       );
+      
       console.log(`[FOLLOW] @${followerHandle} now follows @${followeeHandle}`);
     } catch (err: any) {
       throw new Error("Follow action failed: " + err.message);

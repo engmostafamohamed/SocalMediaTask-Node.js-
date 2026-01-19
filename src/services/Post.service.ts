@@ -32,20 +32,31 @@ export class PostService implements IPostService {
 
       const createdPost = rows[0] as IPost;
 
-      // Save mentions
+      // Save mentions - only for users that exist
       for (const mentionedHandle of post.mentions) {
-        await connectDB.query(
-          "INSERT INTO mentions (postId, mentionedHandle) VALUES (?, ?)",
-          [postId, mentionedHandle]
+        // Check if mentioned user exists
+        const [userRows] = await connectDB.query<RowDataPacket[]>(
+          "SELECT handle FROM users WHERE handle = ?",
+          [mentionedHandle]
         );
-        
-        try {
-          await this.notificationService.sendPushNotification(
-            mentionedHandle,
-            `@${authorHandle} mentioned you: "${content}"`
+
+        if (userRows.length > 0) {
+          // User exists, save the mention
+          await connectDB.query(
+            "INSERT INTO mentions (postId, mentionedHandle) VALUES (?, ?)",
+            [postId, mentionedHandle]
           );
-        } catch (notifError) {
-          console.log(`[NOTIFICATION] Failed to notify @${mentionedHandle}`);
+          
+          try {
+            await this.notificationService.sendPushNotification(
+              mentionedHandle,
+              `@${authorHandle} mentioned you: "${content}"`
+            );
+          } catch (notifError) {
+            console.log(`[NOTIFICATION] Failed to notify @${mentionedHandle}`);
+          }
+        } else {
+          console.log(`[MENTION] User @${mentionedHandle} does not exist, skipping mention`);
         }
       }
 
@@ -55,6 +66,7 @@ export class PostService implements IPostService {
       throw new Error("Failed to create post: " + err.message);
     }
   }
+
 
   async getTimeline(userHandle: string, user: IUser): Promise<IPost[]> {
     try {
